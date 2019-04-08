@@ -17,22 +17,49 @@ const propertyData = {
 function handleClick(e) {
   e.preventDefault();
   const mainEl = document.getElementById('main');
-  /* 
+  /*
     getDataを呼び出して、mainEl.innerHTMLを利用して、結果を出力します。
   */
+  mainEl.innerHTML = getData();
 }
 
 function getData() {
-  /* 
+  /*
     fetchDataを呼び出して、戻ってきたデータのsuccessの値を元にresolveで物件データまたは、rejectでエラーメッセージを返す。
   */
+ fetchData().then(
+   (result) => {
+     console.log(result.propertyData);
+     return result.propertyData;
+   },
+   (error) => {
+     console.log(error.message);
+     return error.message;
+   }
+ );
 }
 
 function fetchData() {
-  /* 
+  /*
     lodashのrandom()を使って、80%の確率で正しいデータを返し、20%の確率でエラーを返すようにしましょう。
     またsetTimeoutを利用して、1秒待ってから結果を得るようにします。
   */
+  return new Promise((resolve, reject) => {
+    setTimeout(function () {
+      const random = _.random(10);
+      if (random < 8) {
+        resolve({
+          success: true,
+          propertyData: propertyData
+        });
+      } else {
+        reject({
+          success: false,
+          message: 'データの取得に失敗しました。'
+        });
+      }
+    }, 1000);
+  });
 }
 
 {
