@@ -20,23 +20,26 @@ function handleClick(e) {
   /*
     getDataを呼び出して、mainEl.innerHTMLを利用して、結果を出力します。
   */
-  mainEl.innerHTML = getData();
+  // getData().then((data) => {
+  //   mainEl.innerHTML = data;
+  // })
+  // .catch((err) => {
+  //   mainEl.innerHTML = err;
+  // });
 }
 
 function getData() {
   /*
     fetchDataを呼び出して、戻ってきたデータのsuccessの値を元にresolveで物件データまたは、rejectでエラーメッセージを返す。
   */
- fetchData().then(
-   (result) => {
-     console.log(result.propertyData);
-     return result.propertyData;
-   },
-   (error) => {
-     console.log(error.message);
-     return error.message;
-   }
- );
+//  fetchData().then((results) => {
+//      if (results.success === true) {
+//        return Promise.resolve(results.propertyData);
+//      } else {
+//        return Promise.reject(results.message);
+//      };
+//    }
+//  );
 }
 
 function fetchData() {
@@ -46,14 +49,14 @@ function fetchData() {
   */
   return new Promise((resolve, reject) => {
     setTimeout(function () {
-      const random = _.random(10);
-      if (random < 8) {
+      const random = _.random(1,5);
+      if (random < 4) {
         resolve({
           success: true,
           propertyData: propertyData
         });
       } else {
-        reject({
+        resolve({
           success: false,
           message: 'データの取得に失敗しました。'
         });
