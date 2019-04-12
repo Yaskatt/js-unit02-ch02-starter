@@ -50,10 +50,10 @@ function fetchData() {
   return new Promise((resolve, reject) => {
     setTimeout(function () {
       const random = _.random(1,5);
-      if (random < 4) {
+      if (random <= 4) {
         resolve({
           success: true,
-          propertyData: propertyData
+          property: Object.assign({}, propertyData)
         });
       } else {
         resolve({
