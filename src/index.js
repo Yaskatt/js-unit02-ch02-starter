@@ -20,26 +20,35 @@ function handleClick(e) {
   /*
     getDataを呼び出して、mainEl.innerHTMLを利用して、結果を出力します。
   */
-  // getData().then((data) => {
-  //   mainEl.innerHTML = data;
-  // })
-  // .catch((err) => {
-  //   mainEl.innerHTML = err;
-  // });
+  getData().then((data) => {
+    mainEl.innerHTML = `
+      <h3>宿泊施設名：${data.propertyName}</h3>
+      <dl>
+      <dt>部屋数：</dt><dd>${data.roomNum}</dd>
+      <dt>バスルーム数：</dt><dd>${data.bathroomNum}</dd>
+      <dt>料金（ドル）：</dt><dd>${data.priceInDollars}</dd>
+      <dt>ホストID：</dt><dd>${data.host.id}</dd>
+      <dt>ホスト名：</dt><dd>${data.host.firstName}</dd>
+      </dl>
+    `;
+  })
+  .catch((err) => {
+    mainEl.innerHTML = err;
+  });
 }
 
 function getData() {
   /*
     fetchDataを呼び出して、戻ってきたデータのsuccessの値を元にresolveで物件データまたは、rejectでエラーメッセージを返す。
   */
-//  fetchData().then((results) => {
-//      if (results.success === true) {
-//        return Promise.resolve(results.propertyData);
-//      } else {
-//        return Promise.reject(results.message);
-//      };
-//    }
-//  );
+ fetchData().then((results) => {
+     if (results.success) {
+       return Promise.resolve(results.propertyData);
+     } else {
+       return Promise.reject(results.message);
+     };
+   }
+ );
 }
 
 function fetchData() {
@@ -47,14 +56,11 @@ function fetchData() {
     lodashのrandom()を使って、80%の確率で正しいデータを返し、20%の確率でエラーを返すようにしましょう。
     またsetTimeoutを利用して、1秒待ってから結果を得るようにします。
   */
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     setTimeout(function () {
       const random = _.random(1,5);
       if (random <= 4) {
-        resolve({
-          success: true,
-          property: Object.assign({}, propertyData)
-        });
+        resolve(Object.assign({}, {propertyData}, {success: true}));
       } else {
         resolve({
           success: false,
