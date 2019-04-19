@@ -34,7 +34,7 @@ function handleClick(e) {
   })
   .catch((err) => {
     mainEl.innerHTML = `<p>${err}</p>`
-  });
+  })
 }
 
 function getData() {
@@ -46,8 +46,8 @@ function getData() {
       return Promise.resolve(results.propertyData);
     } else {
       return Promise.reject(results.message);
-    };
-  });
+    }
+  })
 }
 
 function fetchData() {
@@ -67,7 +67,7 @@ function fetchData() {
         });
       }
     }, 1000);
-  });
+  })
 }
 
 {
