@@ -30,10 +30,10 @@ function handleClick(e) {
       <dt>ホストID：</dt><dd>${data.host.id}</dd>
       <dt>ホスト名：</dt><dd>${data.host.firstName}</dd>
       </dl>
-    `;
+    `
   })
   .catch((err) => {
-    mainEl.innerHTML = err;
+    mainEl.innerHTML = `<p>${err}</p>`
   });
 }
 
@@ -41,14 +41,13 @@ function getData() {
   /*
     fetchDataを呼び出して、戻ってきたデータのsuccessの値を元にresolveで物件データまたは、rejectでエラーメッセージを返す。
   */
- fetchData().then((results) => {
-     if (results.success) {
-       return Promise.resolve(results.propertyData);
-     } else {
-       return Promise.reject(results.message);
-     };
-   }
- );
+  return fetchData().then((results) => {
+    if (results.success) {
+      return Promise.resolve(results.propertyData);
+    } else {
+      return Promise.reject(results.message);
+    };
+  });
 }
 
 function fetchData() {
